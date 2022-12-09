@@ -4,6 +4,7 @@
 
 # TmpWorkflow (venv name)
 botvenv
+botvenv_ubuntu_arm64
 
 ### Flask ###
 instance/*
