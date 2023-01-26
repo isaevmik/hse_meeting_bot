@@ -141,7 +141,7 @@ def echo_message(message: telebot.types.Message) -> None:
                 bot_users.telegram_id == message.from_user.id
             ).execute()
 
-            bot.send_message(message.chat.id, "Подбираем, ожидайте...")
+            bot.send_message(message.chat.id, "Мы сообщим тебе, когда подберём пару!")
 
             query = (
                 bot_users.select()
@@ -151,6 +151,7 @@ def echo_message(message: telebot.types.Message) -> None:
                 )
                 .get()
             )
+
             if query:
                 bot_users.update({bot_users.status: "MEETING_SCHEDULED"}).where(
                     bot_users.telegram_id == message.from_user.id
@@ -160,7 +161,17 @@ def echo_message(message: telebot.types.Message) -> None:
                     bot_users.telegram_id == query.telegram_id
                 ).execute()
 
-                bot.send_message(message.chat.id, f"Ваш партнёр @{query.tg_username}")
+                bot.send_message(
+                    message.chat.id,
+                    f"Ваш партнёр @{query.tg_username}",
+                    reply_markup=telebot.types.ReplyKeyboardRemove(),
+                )
+
+                bot.send_message(
+                    query.chat_id,
+                    f"Ваш партнёр @{message.from_user.username},",
+                    reply_markup=telebot.types.ReplyKeyboardRemove(),
+                )
 
                 meetings.insert(
                     {
@@ -171,6 +182,11 @@ def echo_message(message: telebot.types.Message) -> None:
                         meetings.status: "SCHEDULED",
                     }
                 ).execute()
+            else:
+                bot.send_message(
+                    message.chat.id,
+                    "Пока не удалось найти вам партнёра. Попробуйте попозже!",
+                )
 
         if message.text == "Нет":
             bot.send_message(message.chat.id, "До встречи на следующей неделе!")
