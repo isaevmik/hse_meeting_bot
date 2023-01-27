@@ -6,7 +6,7 @@ deps:  ## Install dependencies
 lint:  ## Lint and static-check
 	flake8 --jobs 8 --statistics --show-source --max-line-length 120
 	pylint --jobs 8 $(PYTHONPATH)
-	mypy $(PYTHONPATH)
+	mypy --install-types --ignore-missing-imports $(PYTHONPATH)
 
 format:  ## Format code
 	autoflake --recursive --in-place $(PYTHONPATH)
