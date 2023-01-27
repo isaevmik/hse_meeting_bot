@@ -17,6 +17,9 @@ format:  ## Format code
 push:  ## Push code with tags
 	git push && git push --tags
 
+db:  ## Run bot
+	poetry run python3 build_database.py
+
 run:  ## Run bot
 	poetry run python3 main.py
 
