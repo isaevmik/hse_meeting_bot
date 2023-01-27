@@ -1,14 +1,13 @@
-from decouple import config
-from dotenv import load_dotenv
 import logging
 import os
-import telebot
 
+import telebot
+from decouple import config
+from dotenv import load_dotenv
 
 from captcha_generator import get_captcha
 from database.models import bot_users, meetings
 from messages import captcha_messages, meetings_messages, welcome
-
 
 print(logging.__file__)
 load_dotenv()
@@ -35,7 +34,9 @@ def captcha_checker(
     message: telebot.types.Message, captcha_txt: str, cnt: int = 0
 ) -> None:
 
-    _LOGGER.info(f"Captcha {message.text} by {message.from_user.id} / {captcha_txt}")
+    _LOGGER.info(
+        msg=f"Captcha {message.text} by {message.from_user.id} / {captcha_txt}"
+    )
 
     bot.send_message(message.chat.id, captcha_messages.CHECK_MESSAGE)
 
@@ -125,11 +126,6 @@ def send_welcome(message: telebot.types.Message) -> None:
         bot.send_message(message.chat.id, "Давай зарегестрируем тебя.")
 
         send_captcha(message)
-
-
-@bot.message_handler(commands=["help"])
-def send_welcome(message: telebot.types.Message) -> None:
-    pass
 
 
 @bot.message_handler(func=lambda message: True)

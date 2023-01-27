@@ -1,6 +1,5 @@
 import logging
 
-
 LOGGER = logging.basicConfig(
     filename="/home/isaevmik/airdropbot/airdropbotmain.log",
     filemode="a",

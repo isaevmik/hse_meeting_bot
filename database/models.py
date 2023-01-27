@@ -1,6 +1,8 @@
-from database.database_configuration import db
-import peewee
 from uuid import uuid4
+
+import peewee
+
+from database.database_configuration import db
 
 
 class BaseModel(peewee.Model):

@@ -1,7 +1,6 @@
-import psycopg2
-from playhouse.postgres_ext import PostgresqlExtDatabase, Model
+import psycopg2  # noqa
 from decouple import config
-
+from playhouse.postgres_ext import Model, PostgresqlExtDatabase  # noqa
 
 db = PostgresqlExtDatabase(
     config("DB_NAME"),

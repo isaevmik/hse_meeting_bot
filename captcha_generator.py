@@ -1,6 +1,7 @@
-from ast import Str
 import random
+from ast import Str
 from typing import Tuple
+
 from captcha.image import ImageCaptcha
 
 
